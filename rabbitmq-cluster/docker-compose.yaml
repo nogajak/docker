@@ -1,0 +1,87 @@
+version: "3.9"
+
+services:
+  rabbitmq_node_01:
+    container_name: rabbitmq_node_01
+    image: rabbitmq:3.12.0-management
+    volumes:
+    - "./tmp/log/rabbitmq_node_01:/var/log/rabbitmq"
+    - "./tmp/data/rabbitmq_node_01:/var/lib/rabbitmq"
+    - "./config:/etc/rabbitmq:ro"
+    networks: 
+      - internal
+    ports:
+    #   - "4369:4369" 
+    #   - "5672:5672" 
+      - "15672:15672"
+    #   - "25672:25672"
+    environment:
+      # RABBITMQ_USE_LONGNAME: "yes"
+      RABBITMQ_NODENAME: "rabbit@rabbitmq_node_01"
+      RABBITMQ_CONFIG_FILES: "/etc/rabbitmq/conf.d"
+      RABBITMQ_ERLANG_COOKIE: "AaaaahhhHHHH"
+      NODE_PORT: "5672"
+      RABBITMQ_DIST_PORT: "25672"
+      ERL_EPMD_PORT: "4369"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  rabbitmq_node_02:
+    container_name: rabbitmq_node_02
+    image: rabbitmq:3.12.0-management
+    volumes:
+    - "./tmp/log/rabbitmq_node_01:/var/log/rabbitmq"
+    - "./tmp/data/rabbitmq_node_01:/var/lib/rabbitmq"
+    - "./config:/etc/rabbitmq:ro"
+    networks: 
+      - internal
+    ports:
+    #   - "4369:4369" 
+    #   - "5672:5672" 
+      - "15673:15672" 
+    #   - "25672:25672"
+    environment:
+      # RABBITMQ_USE_LONGNAME: "yes"
+      RABBITMQ_NODENAME: "rabbit@rabbitmq_node_02"
+      RABBITMQ_CONFIG_FILES: "/etc/rabbitmq/conf.d"
+      RABBITMQ_ERLANG_COOKIE: "AaaaahhhHHHH"
+      NODE_PORT: "5672"
+      RABBITMQ_DIST_PORT: "25672"
+      ERL_EPMD_PORT: "4369"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  rabbitmq_node_03:
+    container_name: rabbitmq_node_03
+    image: rabbitmq:3.12.0-management
+    volumes:
+    - "./tmp/log/rabbitmq_node_01:/var/log/rabbitmq"
+    - "./tmp/data/rabbitmq_node_01:/var/lib/rabbitmq"
+    - "./config:/etc/rabbitmq:ro"
+    networks: 
+      - internal
+    ports:
+      # - "4369:4369" 
+      # - "5672:5672" 
+      - "15674:15672" 
+      # - "25672:25672"
+    environment:
+      # RABBITMQ_USE_LONGNAME: "yes"
+      RABBITMQ_NODENAME: "rabbit@rabbitmq_node_03"
+      RABBITMQ_CONFIG_FILES: "/etc/rabbitmq/conf.d"
+      RABBITMQ_ERLANG_COOKIE: "AaaaahhhHHHH"
+      NODE_PORT: "5672"
+      RABBITMQ_DIST_PORT: "25672"
+      ERL_EPMD_PORT: "4369"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+networks:
+  internal:
+    driver: bridge
