@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  haproxy_node:
+    container_name: haproxy_node
+    networks: 
+      - rabbitmq_network
+    image: haproxy:2.6.18-alpine3.20
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - "5672:5672" 
+    
+networks:
+  rabbitmq_network:
+    external: true
