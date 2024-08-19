@@ -1,0 +1,20 @@
+---
+
+services:
+  redis:
+    container_name: redis
+    image: redis:7.4.0-bookworm
+    command: "--appendonly yes --bind 0.0.0.0 --port 6379 --protected-mode no --loglevel verbose"
+    ports:
+      - "6379:6379/tcp"
+    volumes:
+      - redis:/data
+    networks: 
+      - my_network
+
+volumes:
+  redis:
+
+networks:
+  my_network:
+    external: true
